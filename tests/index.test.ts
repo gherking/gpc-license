@@ -31,9 +31,40 @@ const checkConfig = async (testCase: string, config?: Partial<LicenseConfig>): P
   expect(actual[0]).toEqual(expected);
 }
 
-// TODO: Add tests of your precompiler
-describe("Template", () => {
-  test("should not do anything", async () => {
-    await checkConfig("test");
+describe("License", () => {
+  test("should handle empty config", () => {
+    expect(() => new License()).toThrow();
+  });
+
+  test("should handle missing license file if token is set", () => {
+    expect(() => new License({
+      licenseText: '${LICENSE}',
+    })).toThrow();
+  });
+
+  test("should handle if both set and no token", () => {
+    expect(() => new License({
+      licenseFile: 'LICENSE',
+      licenseText: 'TEXT',
+    })).toThrow();
+  });
+
+  test("should handle if license file does not exist", () => {
+    expect(() => new License({
+      licenseFile: 'NO_FILE',
+    })).toThrow();
+  });
+
+  test("should add license statement with start comment", async () => {
+    await checkConfig("with-start-comment", {
+      licenseFile: 'LICENSE',
+      licenseText: '${LICENSE}\n\nAbove this there is the license',
+    });
+  });
+
+  test("should add license statement without start comment", async () => {
+    await checkConfig("without-start-comment", {
+      licenseFile: 'LICENSE',
+    });
   });
 });
