@@ -1,3 +1,5 @@
+> **IMPORTANT** This is a placeholder, initial version of the package; **DO NOT USE** this version. Please wait until **v1.0.0** is released!
+
 # gpc-license
 
 ![Downloads](https://img.shields.io/npm/dw/gpc-license?style=flat-square) ![Version@npm](https://img.shields.io/npm/v/gpc-license?label=version%40npm&style=flat-square) ![Version@git](https://img.shields.io/github/package-json/v/gherking/gpc-license/master?label=version%40git&style=flat-square) ![CI](https://img.shields.io/github/workflow/status/gherking/gpc-license/CI/master?label=ci&style=flat-square) ![Docs](https://img.shields.io/github/workflow/status/gherking/gpc-license/Docs/master?label=docs&style=flat-square)
