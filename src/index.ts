@@ -4,20 +4,22 @@ import { /* TODO */ } from "gherkin-ast";
 const debug = require("debug")("gpc:template");
 
 // TODO: define your configuration option, if necessary
-export interface Config {
-  option: string;
+export interface LicenseConfig {
+  licenseFile?: string;
+  licenseText?: string;
+  licenseFormat: string;
 }
 
 // TODO: add default options
-const DEFAULT_CONFIG: Config = {
-  option: "OPTION"
+const DEFAULT_CONFIG: LicenseConfig = {
+  licenseFormat: '${text}'
 };
 
 // TODO: Add implementation of your precompiler
-export default class Template implements PreCompiler {
-  private config: Config;
+export default class License implements PreCompiler {
+  private config: LicenseConfig;
 
-  constructor(config?: Partial<Config>) {
+  constructor(config?: Partial<LicenseConfig>) {
     debug("Intialize");
     this.config = {
       ...DEFAULT_CONFIG,
@@ -27,20 +29,7 @@ export default class Template implements PreCompiler {
 
   onFeature(): void {
     // TODO: remove
+    // @ts-ignore
     console.log(this.config);
   }
 }
-
-/*
- * @example:
- * export default class MyPrecompiler implements PreCompiler {
- *   constructor(config) {
- *     super();
- *     this.config = config;
- *   }
- * 
- *   onScenario(scenario) {
- *     // doing smth with scenario
- *   }
- * }
- */

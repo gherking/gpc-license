@@ -1,6 +1,6 @@
 import { load, process } from "gherking";
 import { Document, pruneID } from "gherkin-ast";
-import Template, { Config } from "../src";
+import License, { LicenseConfig } from "../src";
 
 const cleanLocationInfo = (ast: Document): void => {
   delete ast.sourceFile;
@@ -15,10 +15,10 @@ const loadTestFeatureFile = async (folder: "input" | "expected", file: string): 
   return ast[0];
 }
 
-const checkConfig = async (testCase: string, config: Partial<Config>): Promise<void> => {
+const checkConfig = async (testCase: string, config?: Partial<LicenseConfig>): Promise<void> => {
   const input = await loadTestFeatureFile("input", `${testCase}.feature`);
   const expected = await loadTestFeatureFile("expected", `${testCase}.feature`);
-  const actual = process(input, new Template(config));
+  const actual = process(input, new License(config));
 
   cleanLocationInfo(actual[0]);
   delete expected.uri;
@@ -34,6 +34,6 @@ const checkConfig = async (testCase: string, config: Partial<Config>): Promise<v
 // TODO: Add tests of your precompiler
 describe("Template", () => {
   test("should not do anything", async () => {
-    await checkConfig("test", {});
+    await checkConfig("test");
   });
 });

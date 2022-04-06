@@ -1,21 +1,21 @@
-# gpc-template
+# gpc-license
 
-![Downloads](https://img.shields.io/npm/dw/gpc-template?style=flat-square) ![Version@npm](https://img.shields.io/npm/v/gpc-template?label=version%40npm&style=flat-square) ![Version@git](https://img.shields.io/github/package-json/v/gherking/gpc-template/master?label=version%40git&style=flat-square) ![CI](https://img.shields.io/github/workflow/status/gherking/gpc-template/CI/master?label=ci&style=flat-square) ![Docs](https://img.shields.io/github/workflow/status/gherking/gpc-template/Docs/master?label=docs&style=flat-square)
+![Downloads](https://img.shields.io/npm/dw/gpc-license?style=flat-square) ![Version@npm](https://img.shields.io/npm/v/gpc-license?label=version%40npm&style=flat-square) ![Version@git](https://img.shields.io/github/package-json/v/gherking/gpc-license/master?label=version%40git&style=flat-square) ![CI](https://img.shields.io/github/workflow/status/gherking/gpc-license/CI/master?label=ci&style=flat-square) ![Docs](https://img.shields.io/github/workflow/status/gherking/gpc-license/Docs/master?label=docs&style=flat-square)
 
-This repository is a template to create precompilers for GherKing.
+This precompiler can be used to inject **License** statement into the feature files.
 
 ## Usage
 
 ```javascript
 'use strict';
 const compiler = require('gherking');
-const { default: Template } = require('gpc-template');
+const { default: License } = require('gpc-license');
 
 let ast = await compiler.load('./features/src/login.feature');
 ast = compiler.process(
   ast,
-  new Template({
-    // config
+  new License({
+    licenseFile: './LICENSE',
   })
 );
 await compiler.save('./features/dist/login.feature', ast, {
@@ -26,13 +26,13 @@ await compiler.save('./features/dist/login.feature', ast, {
 ```typescript
 'use strict';
 import {load, process, save} from "gherking";
-import Template from "gpc-template";
+import License from "gpc-license";
 
 let ast = await load("./features/src/login.feature");
 ast = process(
   ast,
-  new Template({
-    // config
+  new License({
+    licenseFile: './LICENSE',
   })
 );
 await save('./features/dist/login.feature', ast, {
@@ -42,10 +42,10 @@ await save('./features/dist/login.feature', ast, {
 
 ## Other
 
-This package uses [debug](https://www.npmjs.com/package/debug) for logging, use `gpc:template` :
+This package uses [debug](https://www.npmjs.com/package/debug) for logging, use `gpc:license` :
 
 ```shell
-DEBUG=gpc:template* gherking ...
+DEBUG=gpc:license* gherking ...
 ```
 
-For detailed documentation see the [TypeDocs documentation](https://gherking.github.io/gpc-template/).
+For detailed documentation see the [TypeDocs documentation](https://gherking.github.io/gpc-license/).
