@@ -5,13 +5,17 @@ import { lines } from "lines-builder";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const debug = require("debug")("gpc:license");
 
-// TODO: define your configuration option, if necessary
+export enum LicensePlacement {
+  START = 'start',
+  END = 'end',
+}
+
 export interface LicenseConfig {
   licenseFile?: string;
   licenseText?: string;
+  placement?: LicensePlacement;
 }
 
-// TODO: Add implementation of your precompiler
 export default class License implements PreCompiler {
   private static readonly TEXT_PLACEHOLDER = '${LICENSE}';
   private readonly config: LicenseConfig;
@@ -49,6 +53,9 @@ export default class License implements PreCompiler {
         config.licenseText = '${LICENSE}';
       }
     }
+    if (!config.placement) {
+      config.placement = LicensePlacement.START;
+    }
     return config;
   }
 
@@ -68,16 +75,25 @@ export default class License implements PreCompiler {
     }, licenseText).toString();
   }
 
-  onDocument(d: Document): void {
-    debug('onDocument(startComment: %o)', d.startComment);
-    if (d.startComment) {
-      d.startComment = new Comment([
-        this.license,
-        "",
-        d.startComment.text,
-      ].join("\n"));
+  private setLicenseComment(d: Document, key: "startComment" | "endComment") {
+    debug("setLicenseComment(key: %s, comment: %o)", key, d[key]);
+    if (d[key]) {
+      d[key] = new Comment(
+        key === 'startComment'
+          ? [this.license, "", d[key].text].join("\n")
+          : [d[key].text, "", this.license].join("\n")
+      );
     } else {
-      d.startComment = new Comment(this.license);
+      d[key] = new Comment(this.license);
+    }
+  }
+
+  onDocument(d: Document): void {
+    debug('onDocument(startComment: %o, placement: %s)', d.startComment, this.config.placement);
+    if (!this.config.placement || this.config.placement === LicensePlacement.START) {
+      this.setLicenseComment(d, "startComment");
+    } else {
+      this.setLicenseComment(d, "endComment");
     }
   }
 }

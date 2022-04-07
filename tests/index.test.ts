@@ -1,6 +1,6 @@
 import { load, process } from "gherking";
 import { Document, pruneID } from "gherkin-ast";
-import License, { LicenseConfig } from "../src";
+import License, { LicenseConfig, LicensePlacement } from "../src";
 
 const cleanLocationInfo = (ast: Document): void => {
   delete ast.sourceFile;
@@ -62,9 +62,18 @@ describe("License", () => {
     });
   });
 
+  test("should add license statement with end comment", async () => {
+    await checkConfig("with-end-comment", {
+      licenseFile: 'LICENSE',
+      licenseText: '${LICENSE}\n\nAbove this there is the license',
+      placement: LicensePlacement.END,
+    });
+  });
+
   test("should add license statement without start comment", async () => {
     await checkConfig("without-start-comment", {
       licenseFile: 'LICENSE',
+      placement: LicensePlacement.START,
     });
   });
 });
