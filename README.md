@@ -51,7 +51,7 @@ You can set the license text to the feature files in 3 ways:
 
 ### License placement
 
-The license text can be placed either in the start or the end of the feature file. By default it is placed in the start of the feature file. It can be set via the `placement` coonfiguration option, with one of the `LicensePlacement` enum values.
+The license text can be placed either in the start or the end of the feature file. By default it is placed in the start of the feature file. It can be set via the `placement` configuration option, with one of the `LicensePlacement` enum values.
 
 ## Other
 
