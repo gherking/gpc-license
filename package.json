@@ -1,6 +1,6 @@
 {
   "name": "gpc-license",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "This repository is a template to create precompilers for GherKing.",
   "main": "index.js",
   "types": "index.d.ts",
